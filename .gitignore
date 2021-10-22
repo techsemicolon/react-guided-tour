@@ -1,7 +1,10 @@
+# visual studio code
+.vscode
+
 # Logs
 logs
 *.log
-npm-debug.log*
+
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
@@ -101,4 +104,8 @@ dist
 .dynamodb/
 
 # TernJS port file
+<<<<<<< HEAD
 .tern-port
+=======
+.tern-port
+>>>>>>> master
