@@ -1,0 +1,5 @@
+div.guided-tour-step-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,7 +1,7 @@
 {
-  "name": "react-npm-package-boilerplate",
+  "name": "react-guided-tour",
   "version": "1.0.1",
-  "description": "react,react native and jsx npm package generator with typescript",
+  "description": "React guided your for users with customizations",
   "scripts": {
     "ts-build": "rm -rf ./dist/** && tsc",
     "babel-build": "rm -rf ./dist/** && babel ./src --out-dir dist --extensions '.ts,.tsx'",
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pankod/react-typescript-npm-package-boilerplate"
+    "url": "https://github.com/techsemicolon/react-typescript-guided-tour"
   },
   "bugs": {
-    "url": "https://github.com/pankod/react-typescript-npm-package-boilerplate/issues"
+    "url": "https://github.com/techsemicolon/react-typescript-guided-tour/issues"
   },
-  "homepage": "https://github.com/pankod/react-typescript-npm-package-boilerplate",
+  "homepage": "https://github.com/techsemicolon/react-typescript-guided-tour",
   "files": [
     "dist"
   ],
@@ -33,17 +33,16 @@
     "babel",
     "react-dom"
   ],
-  "author": "Pankod Inc.",
+  "author": "Mihir Bhende",
   "contributors": [
     {
-      "name": "selcuksarikoz",
-      "email": "selcuk@pankod.com"
+      "name": "Mihir Bhende",
+      "email": "tech.semicolon@gmail.com"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react-floater": "^0.7.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -68,8 +67,7 @@
     "typescript": "^3.3.3333"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*",
-    "react-native": "*"
+    "react": "^16.8.0  || ^17.0.0",
+    "react-dom": "^16.8.0  || ^17.0.0"
   }
 }
