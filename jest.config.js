@@ -1,13 +1,19 @@
-const { defaults } = require('jest-config');
+const { defaults } = require("jest-config");
 
 module.exports = {
   bail: true,
-  moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
-  roots: ['.'],
+  moduleFileExtensions: [
+    ...defaults.moduleFileExtensions,
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+  ],
+  roots: ["."],
   // testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    "^.+\\.(ts|tsx)?$": "ts-jest",
   },
   verbose: true,
-  "moduleDirectories": ["node_modules", "src"]
+  moduleDirectories: ["node_modules", "src"],
 };
