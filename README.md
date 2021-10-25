@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/techsemicolon/react-guided-tour">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo"  height="80">
   </a>
 
   <h3 align="center">React Guided Tour</h3>
@@ -52,8 +52,6 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 You have a great react webapp(or any app in general), where you have worked very hard to build lot of functionalities, widgets, layouts etc for the customer. You spent months and years building it.
 
 Now, lets go into customer's shoes!
@@ -86,7 +84,226 @@ npm install --save react-guided-tour
 
 ## Usage
 
-To be added...
+### Simple usage
+
+Wrap the your app components under the `GuidedTourProvider` and pass the configurations like below :
+
+```jsx
+import React from "react";
+import { GuidedTourProvider } from "react-guided-tour";
+
+const App = () => {
+  const tourSteps = [
+    {
+      name: "welcome-user",
+      anchor: "welcome",
+      component: "Hello, welcome to the app",
+    },
+    {
+      name: "see-off-user",
+      anchor: "bye",
+      component: "Thank you for browsing",
+    },
+  ];
+
+  return (
+    <GuidedTourProvider tourSteps={tourSteps}>
+      <header guided-tour-anchor="welcome">Header</header>
+      <div>Some Content</div>
+      <footer guided-tour-anchor="bye">Footer</footer>
+    </GuidedTourProvider>
+  );
+};
+
+export default App;
+```
+
+Let's understand how it works :
+
+- When you wrap your component tree inside the `GuidedTourProvider`, all the children of `GuidedTourProvider` get access to the utility functions which let you customize the user guided tour. For above example, we are just using default settings so we do not need utility hooks. Further examples will explore those in detail.
+- You add an attribute `guided-tour-anchor='...'` to any element in any of your children component of `GuidedTourProvider`, which acts as an anchor for the tour popover.
+- You create a configuration object, which is a simple json array of `TourSteps`, which contain `name` of the step, `anchor` which is the value of `guided-tour-anchor` attribute and `component` which is just a plain text in this example.
+
+And thats it! This will take the user through the guided tour as shown in the screencast below.
+
+### Starting the tour manually
+
+You might want to wait for certain user actions before you start the guided tour for the user. For example, waiting for user to click on an action button which says `Start Tour` or may be wait for certain time before starting the tour. In that case, the utility hooks are handy.
+
+```jsx
+import React from "react";
+import { GuidedTourProvider } from "react-guided-tour";
+
+const App = () => {
+  const { startTour } = useGuidedTour();
+
+  const tourSteps = [
+    {
+      name: "welcome-user",
+      anchor: "welcome",
+      component: "Hello, welcome to the app",
+    },
+    {
+      name: "see-off-user",
+      anchor: "bye",
+      component: "Thank you for browsing",
+    },
+  ];
+
+  return (
+    <GuidedTourProvider>
+      <header guided-tour-anchor="welcome">Header</header>
+      <div>Some Content</div>
+      <footer guided-tour-anchor="bye">Footer</footer>
+      // Manually triggering the tour start
+      <button onClick={() => startTour(tourSteps)}>Start Tour</button>
+    </GuidedTourProvider>
+  );
+};
+
+export default App;
+```
+
+### Using custom components
+
+If you want to use custom components for the tour guide, you can pass any custom component in the `component` configuration of the tour step. These component should be a dumb/representational component.
+
+```jsx
+import React from "react";
+import { GuidedTourProvider } from "react-guided-tour";
+
+const WelcomeTourComponent = () => <>Hello, welcome to the app</>;
+const SeeOffTourComponent = () => <>Thank you for browsing</>;
+
+const App = () => {
+  const { startTour } = useGuidedTour();
+
+  const tourSteps = [
+    {
+      name: "welcome-user",
+      anchor: "welcome",
+      component: WelcomeTourComponent,
+    },
+    {
+      name: "see-off-user",
+      anchor: "bye",
+      component: SeeOffTourComponent,
+    },
+  ];
+
+  return (
+    <GuidedTourProvider>
+      <header guided-tour-anchor="welcome">Header</header>
+      <div>Some Content</div>
+      <footer guided-tour-anchor="bye">Footer</footer>
+      // Manually triggering the tour start
+      <button onClick={() => startTour(tourSteps)}>Start Tour</button>
+    </GuidedTourProvider>
+  );
+};
+
+export default App;
+```
+
+One thing to observer here is that, the tour step custom components do not need to have any buttons to go to next or previous step by default. These will be added for you. If you want to have have custom button, you can do it in 2 ways mentioned below.
+
+### Using custom button for next and previous
+
+```jsx
+import React from "react";
+import { GuidedTourProvider } from "react-guided-tour";
+import { MyCustomButton } from "my-custom-button";
+
+const App = () => {
+  const { startTour } = useGuidedTour();
+
+  const tourSteps = [
+    {
+      name: "welcome-user",
+      anchor: "welcome",
+      component: "Hello, welcome to the app",
+    },
+    {
+      name: "see-off-user",
+      anchor: "bye",
+      component: "Thank you for browsing",
+    },
+  ];
+
+  return (
+    // Custom action button
+    <GuidedTourProvider actionButtonComponent={MyCustomButton}>
+      <header guided-tour-anchor="welcome">Header</header>
+      <div>Some Content</div>
+      <footer guided-tour-anchor="bye">Footer</footer>
+      // Manually triggering the tour start
+      <button onClick={() => startTour(tourSteps)}>Start Tour</button>
+    </GuidedTourProvider>
+  );
+};
+
+export default App;
+```
+
+### Disabling default next and back action buttons and handling that yourself in custom component
+
+```jsx
+import React from "react";
+import { GuidedTourProvider } from "react-guided-tour";
+import { MyCustomButton } from "my-custom-button";
+
+const App = () => {
+  const { startTour } = useGuidedTour();
+
+  const WelcomeTourComponent = () => {
+    const { goBack, goNext } = useGuidedTour();
+
+    return (
+      <>
+        Hello, welcome to the app
+        <button onClick={() => goBack()}>Back</button>
+        <button onClick={() => goNext()}>Next</button>
+      </>
+    );
+  };
+
+  const tourSteps = [
+    {
+      name: "welcome-user",
+      anchor: "welcome",
+      component: WelcomeTourComponent,
+      handleActions: false, //disabling default action buttons, only works when you define custom component
+    },
+    {
+      name: "see-off-user",
+      anchor: "bye",
+      component: "Thank you for browsing",
+    },
+  ];
+
+  return (
+    // Custom action button
+    <GuidedTourProvider actionButtonComponent={MyCustomButton}>
+      <header guided-tour-anchor="welcome">Header</header>
+      <div>Some Content</div>
+      <footer guided-tour-anchor="bye">Footer</footer>
+      // Manually triggering the tour start
+      <button onClick={() => startTour(tourSteps)}>Start Tour</button>
+    </GuidedTourProvider>
+  );
+};
+
+export default App;
+```
+
+### All utility hooks
+
+- `startTour: (tour: TourStep[]) => void` : Starts the tour with given tour step configurations
+- `goToTourStep: (name: string) => void` : Skips to a specific tour step by tour step name
+- `skipTour: () => void` : Skips entire guided tour
+- `goNext: () => void` : Go to next step in the guided tour
+- `goBack: () => void` : Go to previous step in the guided tour
+- `getCurrentTourStep: () => string` : Get name of the current step
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
