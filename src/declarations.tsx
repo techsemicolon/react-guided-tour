@@ -13,7 +13,7 @@ export type TourStep = {
 export interface GuidedTourContextInterface {
   tour: TourStep[];
   disableBackOption?: () => void;
-  startTour: (tour: TourStep[]) => void;
+  startTour: (tour: TourStep[], startFrom?: string) => void;
   goToTourStep: (name: string) => void;
   skipTour: () => void;
   goNext: () => void;

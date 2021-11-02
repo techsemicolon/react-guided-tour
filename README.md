@@ -164,6 +164,51 @@ const App = () => {
 export default App;
 ```
 
+### Starting the tour manually but skip few steps
+
+You might want to start a tour but skip certain steps. This might be due to certain business logic or you user already went through the initial steps before. In that case, you can pass the second argument to the `startTour` function wuth the name of the tour step you want to start from.
+
+```jsx
+import React from "react";
+import { GuidedTourProvider } from "react-guided-tour";
+
+const App = () => {
+  const { startTour } = useGuidedTour();
+
+  const tourSteps = [
+    {
+      name: "welcome-user",
+      anchor: "welcome",
+      component: "Hello, welcome to the app",
+    },
+    {
+      name: "explain-user",
+      anchor: "explain",
+      component: "Explain how something works",
+    },
+    {
+      name: "see-off-user",
+      anchor: "bye",
+      component: "Thank you for browsing",
+    },
+  ];
+
+  return (
+    <GuidedTourProvider>
+      <header guided-tour-anchor="welcome">Header</header>
+      <div>Some Content</div>
+      <footer guided-tour-anchor="explain">Explain</footer>
+      <footer guided-tour-anchor="bye">Footer</footer>
+      // Manually triggering the tour start // Skipping initial tour steps and
+      starting from step named `explain`
+      <button onClick={() => startTour(tourSteps, explain)}>Start Tour</button>
+    </GuidedTourProvider>
+  );
+};
+
+export default App;
+```
+
 ### Using custom components
 
 If you want to use custom components for the tour guide, you can pass any custom component in the `component` configuration of the tour step. These component should be a dumb/representational component.
@@ -209,6 +254,8 @@ One thing to observer here is that, the tour step custom components do not need 
 
 ### Using custom button for next and previous
 
+In this configuration example, you tell the `actionButtonComponent` which button component you want to use for `next` and `back` actions.
+
 ```jsx
 import React from "react";
 import { GuidedTourProvider } from "react-guided-tour";
@@ -247,10 +294,11 @@ export default App;
 
 ### Disabling default next and back action buttons and handling that yourself in custom component
 
+In this configuration example, you set `handleActions` to `false` for the tour steps, telling the package that the custom components will take care of it.
+
 ```jsx
 import React from "react";
 import { GuidedTourProvider } from "react-guided-tour";
-import { MyCustomButton } from "my-custom-button";
 
 const App = () => {
   const { startTour } = useGuidedTour();
@@ -278,12 +326,12 @@ const App = () => {
       name: "see-off-user",
       anchor: "bye",
       component: "Thank you for browsing",
+      handleActions: false, //disabling default action buttons, only works when you define custom component
     },
   ];
 
   return (
-    // Custom action button
-    <GuidedTourProvider actionButtonComponent={MyCustomButton}>
+    <GuidedTourProvider>
       <header guided-tour-anchor="welcome">Header</header>
       <div>Some Content</div>
       <footer guided-tour-anchor="bye">Footer</footer>
@@ -354,15 +402,15 @@ Mihir Bhende - [Tech Blog](https://techsemicolon.github.io/)
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/techsemicolon/react-guided-tour.svg?style=for-the-badge
 [contributors-url]: https://github.com/techsemicolon/react-guided-tour/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/techsemicolon/react-guided-tour.svg?style=for-the-badge
 [forks-url]: https://github.com/techsemicolon/react-guided-tour/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/techsemicolon/react-guided-tour.svg?style=for-the-badge
 [stars-url]: https://github.com/techsemicolon/react-guided-tour/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/techsemicolon/react-guided-tour.svg?style=for-the-badge
 [issues-url]: https://github.com/techsemicolon/react-guided-tour/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/techsemicolon/react-guided-tour.svg?style=for-the-badge
 [license-url]: https://github.com/techsemicolon/react-guided-tour/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/mihir-bhende-63a3558a/

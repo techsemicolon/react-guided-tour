@@ -16,9 +16,9 @@ const GuidedTourProvider: React.FC<GuidedTourProviderProps> = ({
   // State to keep track of the active tour step index
   const [activeTourStepIndex, setActiveTourStepIndex] = useState<number>(0);
 
-  const startTour = (tour: TourStep[]) => {
+  const startTour = (tour: TourStep[], startFrom?: string) => {
     setTour(tour);
-    setActiveTourStepIndex(0);
+    startFrom ? goToTourStep(startFrom) : setActiveTourStepIndex(0);
   };
 
   const skipTour = () => setActiveTourStepIndex(tour.length - 1);
