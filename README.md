@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/techsemicolon/react-guided-tour">
-    <img src="images/logo.png" alt="Logo"  height="80" style="background: #232323;">
+    <img src="images/logo.png" alt="Logo"  height="80" style="background-color: #232323;">
   </a>
 
   <h3 align="center">React Guided Tour</h3>
